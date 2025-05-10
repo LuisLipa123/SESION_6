@@ -1,0 +1,150 @@
+import java.util.Scanner;
+
+// Interfaz Queue
+interface Queue<E> {
+    void enqueue(E x);
+    E dequeue() throws ExceptionIsEmpty;
+    E front() throws ExceptionIsEmpty;
+    E back() throws ExceptionIsEmpty;
+    boolean isEmpty();
+}
+
+// Excepción personalizada
+class ExceptionIsEmpty extends Exception {
+    public ExceptionIsEmpty(String message) {
+        super(message);
+    }
+}
+
+// Clase Node
+class Node<E> {
+    private E data;
+    private Node<E> next;
+
+    public Node(E data) {
+        this.data = data;
+        this.next = null;
+    }
+
+    public E getData() {
+        return data;
+    }
+
+    public Node<E> getNext() {
+        return next;
+    }
+
+    public void setNext(Node<E> next) {
+        this.next = next;
+    }
+}
+
+// Implementación de Queue con lista enlazada
+class QueueLink<E> implements Queue<E> {
+    private Node<E> first;
+    private Node<E> last;
+
+    public QueueLink() {
+        this.first = null;
+        this.last = null;
+    }
+
+    public void enqueue(E x) {
+        Node<E> aux = new Node<>(x);
+        if (this.isEmpty()) {
+            this.first = aux;
+        } else {
+            this.last.setNext(aux);
+        }
+        this.last = aux;
+    }
+
+    public E dequeue() throws ExceptionIsEmpty {
+        if (this.isEmpty()) {
+            throw new ExceptionIsEmpty("La cola está vacía.");
+        }
+        E data = first.getData();
+        first = first.getNext();
+        if (first == null) {
+            last = null;
+        }
+        return data;
+    }
+
+    public E front() throws ExceptionIsEmpty {
+        if (this.isEmpty()) {
+            throw new ExceptionIsEmpty("La cola está vacía.");
+        }
+        return first.getData();
+    }
+
+    public E back() throws ExceptionIsEmpty {
+        if (this.isEmpty()) {
+            throw new ExceptionIsEmpty("La cola está vacía.");
+        }
+        return last.getData();
+    }
+
+    public boolean isEmpty() {
+        return first == null;
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Cola: [");
+        Node<E> current = first;
+        while (current != null) {
+            sb.append(current.getData());
+            current = current.getNext();
+            if (current != null) sb.append(", ");
+        }
+        sb.append("]");
+        return sb.toString();
+    }
+}
+
+// Clase principal para pruebas
+public class Actividad2 {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        try {
+            Queue<Integer> colaEnteros = new QueueLink<>();
+            System.out.print("¿Cuántos enteros desea encolar? ");
+            int nEnteros = scanner.nextInt();
+            for (int i = 0; i < nEnteros; i++) {
+                System.out.print("Ingrese entero #" + (i + 1) + ": ");
+                int valor = scanner.nextInt();
+                colaEnteros.enqueue(valor);
+            }
+
+            System.out.println(colaEnteros);
+            if (!colaEnteros.isEmpty()) {
+                System.out.println("Frente: " + colaEnteros.front());
+                System.out.println("Final: " + colaEnteros.back());
+                System.out.println("Quitando: " + colaEnteros.dequeue());
+                System.out.println(colaEnteros);
+            }
+
+            Queue<String> colaCadenas = new QueueLink<>();
+            System.out.print("\n Cuantas cadenas desea encolar? ");
+            int nCadenas = scanner.nextInt();
+            scanner.nextLine(); // limpiar buffer
+            for (int i = 0; i < nCadenas; i++) {
+                System.out.print("Ingrese cadena #" + (i + 1) + ": ");
+                String cadena = scanner.nextLine();
+                colaCadenas.enqueue(cadena);
+            }
+
+            System.out.println(colaCadenas);
+            if (!colaCadenas.isEmpty()) {
+                System.out.println("Frente: " + colaCadenas.front());
+            }
+
+        } catch (ExceptionIsEmpty e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        scanner.close();
+    }
+}
