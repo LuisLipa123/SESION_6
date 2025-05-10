@@ -1,0 +1,48 @@
+import ejercicio2.*;
+
+import java.util.Scanner;
+
+public class Test {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        try {
+            System.out.print("¿Cuántos enteros desea encolar? ");
+            int nEnteros = scanner.nextInt();
+            Queue<Integer> colaEnteros = new QueueArray<>(nEnteros);
+
+            for (int i = 0; i < nEnteros; i++) {
+                System.out.print("Ingrese entero #" + (i + 1) + ": ");
+                colaEnteros.enqueue(scanner.nextInt());
+            }
+
+            System.out.println(colaEnteros);
+            if (!colaEnteros.isEmpty()) {
+                System.out.println("Frente: " + colaEnteros.front());
+                System.out.println("Final: " + colaEnteros.back());
+                System.out.println("Quitando: " + colaEnteros.dequeue());
+                System.out.println(colaEnteros);
+            }
+
+            System.out.print("\n¿Cuántas cadenas desea encolar? ");
+            int nCadenas = scanner.nextInt();
+            scanner.nextLine(); // Limpiar buffer
+            Queue<String> colaCadenas = new QueueArray<>(nCadenas);
+
+            for (int i = 0; i < nCadenas; i++) {
+                System.out.print("Ingrese cadena #" + (i + 1) + ": ");
+                colaCadenas.enqueue(scanner.nextLine());
+            }
+
+            System.out.println(colaCadenas);
+            if (!colaCadenas.isEmpty()) {
+                System.out.println("Frente: " + colaCadenas.front());
+            }
+
+        } catch (ExceptionIsEmpty e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        scanner.close();
+    }
+}
