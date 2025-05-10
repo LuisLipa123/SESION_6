@@ -1,0 +1,25 @@
+import ejercicio3.PriorityQueueLinked;
+import ejercicio3.PriorityQueue;
+import ejercicio3.ExceptionIsEmpty;
+
+public class Test {
+    public static void main(String[] args) {
+        try {
+            PriorityQueue<String, Integer> cola = new PriorityQueueLinked<>(4); // Prioridades: 0 a 3
+
+            cola.enqueue("Tarea urgente", 3);
+            cola.enqueue("Tarea importante", 2);
+            cola.enqueue("Tarea común", 1);
+            cola.enqueue("Tarea menor", 0);
+
+            System.out.println(cola);
+            System.out.println("Frente: " + cola.front());
+            System.out.println("Final: " + cola.back());
+            System.out.println("Quitando: " + cola.dequeue());
+            System.out.println(cola);
+
+        } catch (ExceptionIsEmpty e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
