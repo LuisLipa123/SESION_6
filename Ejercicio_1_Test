@@ -1,0 +1,27 @@
+import ejercicio1.*;
+
+public class Test {
+    public static void main(String[] args) {
+        try {
+            Stack<Integer> pilaInt = new StackLink<>();
+            pilaInt.push(10);
+            pilaInt.push(20);
+            pilaInt.push(30);
+
+            System.out.println(pilaInt);
+            System.out.println("Tope: " + pilaInt.top());
+            System.out.println("Elemento eliminado: " + pilaInt.pop());
+            System.out.println(pilaInt);
+
+            Stack<String> pilaStr = new StackLink<>();
+            pilaStr.push("hola");
+            pilaStr.push("mundo");
+
+            System.out.println(pilaStr);
+            System.out.println("Tope: " + pilaStr.top());
+
+        } catch (ExceptionIsEmpty e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
